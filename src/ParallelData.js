@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 
-export default function ParallelData() {
+export default function ParallelData(props) {
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>

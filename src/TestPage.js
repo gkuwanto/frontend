@@ -11,49 +11,28 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import RequiredInfo from './RequiredInfo';
-import ParallelData from './ParallelData';
-import DictionartyData from './DictionaryData';
+import RequiredInfo from './RequiredInfoPredict';
 
-const steps = ['Required Information', 'Semi Supervised Data', 'Parallel Data',];
+const steps = ['Required Information'];
 
 
 const theme = createTheme();
 
-export default function Train(props) {
+export default function Test(props) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [email, setEmail] = React.useState('');
-  const [leftLangID, setLeftLangID] = React.useState('');
-  const [rightLangID, setRightLangID] = React.useState('');
+  const [experimentName, setExperimentName] = React.useState('');
+  const [direction, setDirection] = React.useState('');
   const [testSet, setTestSet] = React.useState('');
-  const [valSet, setValSet] = React.useState('');
-  const [dictionary, setDictionary] = React.useState('');
-  const [leftMonolingual, setLeftMonolingual] = React.useState('');
-  const [rightMonolingual, setRightMonolingual] = React.useState('');
-  const [leftParallel, setLeftParallel] = React.useState('');
-  const [rightParallel, setRightParallel] = React.useState('');
-  const [experimetnName, setExperimetnName] = React.useState('');
 
   const  getStepContent = (step) => {
     switch (step) {
       case 0:
         return <RequiredInfo 
           setEmail={setEmail} email={email}
-          setLeftLangID={setLeftLangID} leftLangID={leftLangID}
-          setRightLangID={setRightLangID} rightLangID={rightLangID}
+          setExperimentName={setExperimentName} ExperimentName={experimentName}
+          setDirection={setDirection} experimentName={direction}
           setTestSet={setTestSet} testSet={testSet}
-          setValSet={setValSet} valSet={valSet}
-        />;
-      case 1:
-        return <DictionartyData 
-          setDictionary={setDictionary} dictionary={dictionary}
-          setLeftMonolingual={setLeftMonolingual} leftMonolingual={leftMonolingual}
-          setRightMonolingual={setRightMonolingual} rightMonolingual={rightMonolingual}
-        />;
-      case 2:
-        return <ParallelData 
-          setParallelLeft={setLeftParallel} parallelLeft={leftParallel}
-          setParallelRight={setRightParallel} parallelRight={rightParallel}
         />;
       default:
         throw new Error('Unknown step');
@@ -67,18 +46,8 @@ export default function Train(props) {
       case 0:
         if (anyNull([
           email,
-          leftLangID,
-          rightLangID,
-          testSet,
-          valSet,
-        ])) {
-          return
-        } else {
-          setActiveStep(activeStep + 1);
-        }
-      case 1:
-        if (anyNull([
-          dictionary,
+          experimentName,
+          testSet
         ])) {
           return
         } else {
@@ -89,38 +58,18 @@ export default function Train(props) {
     }
   };
   const submitResult = ()=> {
-    const requestOptions = {
-      method: 'POST',
-      mode: 'cors',
-      headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          email: email,
-          left_language_id: leftLangID,
-          right_language_id: rightLangID,
-          monolingual_left_uploadpath: leftMonolingual,
-          monolingual_right_uploadpath: rightMonolingual,
-          parallel_uploadpath: leftParallel,
-          word_dictionary_uploadpath: dictionary,
-          validation_uploadpath: valSet,
-          test_uploadpath: testSet,
-        })
-    };
-    
-    fetch('https://able-groove-373701.ue.r.appspot.com/jobs/', requestOptions)
-      .then(async response => {
-        if (response.status == 200) {
-          return response.json()
-        } else {
-          alert(await response.json())
-        }
-      })
-      .then(data => {
-        if (data) {
-          setExperimetnName(data.experiment_name)
-          setActiveStep(activeStep + 1);
-        }
-      });
-    
+    if (anyNull([
+      email,
+      experimentName,
+      testSet
+    ])) {
+      return
+    } else {
+      setActiveStep(activeStep + 1);
+    }
+    console.log({
+      email,
+    })
   }
 
   const handleBack = () => {
@@ -157,7 +106,7 @@ export default function Train(props) {
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
           <Typography component="h1" variant="h4" align="center">
-            Train a Model
+            Use a model to translate a file
           </Typography>
           <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
             {steps.map((label) => (
@@ -172,7 +121,7 @@ export default function Train(props) {
                 Thank you for using our demo.
               </Typography>
               <Typography variant="subtitle1">
-                Your train id is {`${experimetnName}`}. We have emailed your setup
+                Your prediction id is {`${experimentName}-${direction}-${email}`}. We have emailed your setup
                 confirmation, and will send you an update when your training has finished.
               </Typography>
             </React.Fragment>
@@ -191,7 +140,7 @@ export default function Train(props) {
                   onClick={activeStep === steps.length -1 ? submitResult : handleNext}
                   sx={{ mt: 3, ml: 1 }}
                 >
-                  {activeStep === steps.length - 1 ? 'Submit Train Setup' : 'Next'}
+                  {activeStep === steps.length - 1 ? 'Submit Predict Setup' : 'Next'}
                 </Button>
               </Box>
             </React.Fragment>
