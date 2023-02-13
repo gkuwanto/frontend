@@ -6,6 +6,27 @@ import { InputLabel, MenuItem, Select } from '@mui/material';
 
 
 export default function RequiredInfo(props) {
+  const [experiments, setExperiments] = React.useState([])
+  const fetchUser = async () => {
+    try {
+      let response = await fetch('https://able-groove-373701.ue.r.appspot.com/models/');
+      let json = await response.json();
+      return { success: true, data: json };
+    } catch (error) {
+      console.log(error);
+      return { success: false };
+    }
+  }
+  React.useEffect(() => {
+    (async () => {
+      setExperiments([false]);
+      let res = await fetchUser();
+      if (res.success) {
+        setExperiments(res.data.map(data=> data.experiment_name));
+      }
+    })();
+  }, []);
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -40,7 +61,7 @@ export default function RequiredInfo(props) {
             value={props.leftLangID}
             onChange={state=>props.setExperimentName(state.target.value)}
           > 
-            {["en-so-ASDFJK-1/16/27"].map(id => <MenuItem value={id} key={"left"+id}>{id}</MenuItem>)}
+            {experiments.map(id => <MenuItem value={id} key={"left"+id}>{id}</MenuItem>)}
           </Select>
         </Grid><Grid item xs={12}>
           <InputLabel id="left_lang_id_label">Direction *</InputLabel>

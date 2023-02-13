@@ -31,7 +31,7 @@ export default function Test(props) {
         return <RequiredInfo 
           setEmail={setEmail} email={email}
           setExperimentName={setExperimentName} ExperimentName={experimentName}
-          setDirection={setDirection} experimentName={direction}
+          setDirection={setDirection} direction={direction}
           setTestSet={setTestSet} testSet={testSet}
         />;
       default:
@@ -75,6 +75,7 @@ export default function Test(props) {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+  const models = fetch("https://")
 
   return (
     <ThemeProvider theme={theme}>
@@ -122,7 +123,7 @@ export default function Test(props) {
               </Typography>
               <Typography variant="subtitle1">
                 Your prediction id is {`${experimentName}-${direction}-${email}`}. We have emailed your setup
-                confirmation, and will send you an update when your training has finished.
+                confirmation, and will send you an update when your model has finished predicting.
               </Typography>
             </React.Fragment>
           ) : (
