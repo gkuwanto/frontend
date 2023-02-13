@@ -49,12 +49,6 @@ export default function DictionartyData(props) {
             onChange={state=>props.setRightMonolingual(state.target.value)}
           />
         </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
-            label="Use the monolingual data to generate more dictionary entries"
-          />
-        </Grid>
       </Grid>
     </React.Fragment>
   );
