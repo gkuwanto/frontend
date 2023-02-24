@@ -23,8 +23,8 @@ export default function ParallelData(props) {
           />
         </Grid>
         <Grid item xs={12}>
-          <Checkbox onChange={state=>props.setAccept(state.target.checked)}/> Agree with the terms? <br/>
-          By checking this box, you agree that the data is legally acquired or that you have legal permission to use and distribute the data and you consent that the data would be made publicly available for the purpose of academic research.
+          <Checkbox onChange={state=>props.setAccept(state.target.checked)}/> I agree with the terms <br/>
+          By checking this box, You agree that all copyrights pertaining to the original datasets remain with their respective owners. You are required to ensure that you have lawfully obtained the dataset that has been uploaded, or have received legal authorization to use and distribute the dataset that has been utilized. Through the use of this training, you consent to the public disclosure of the data provided in the future.
         </Grid>
         <Grid item xs={12}>
           <TextField
