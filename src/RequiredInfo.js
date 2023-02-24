@@ -5,6 +5,8 @@ import TextField from '@mui/material/TextField';
 import { InputLabel, MenuItem, Select } from '@mui/material';
 import lang_id from "./lang_id"
 
+import CreatableSelect from 'react-select/creatable'
+
 export default function RequiredInfo(props) {
   let left="en";
   let right="en";
@@ -32,33 +34,32 @@ export default function RequiredInfo(props) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <InputLabel id="left_lang_id_label">Left Language ID *</InputLabel>
-          <Select
+          <CreatableSelect
+          
             required
             id="left_lang_id"
             name="left_lang_id"
             label="Left Language ID"
             fullWidth
             variant="standard"
-            value={props.leftLangID}
-            onChange={state=>props.setLeftLangID(state.target.value)}
+            onChange={state=>props.setLeftLangID(state.value)}
+            options={lang_id.map(l_id=> {return {label: l_id, value: l_id}})}
           > 
-            {lang_id.map(id => <MenuItem value={id} key={"left"+id}>{id}</MenuItem>)}
-          </Select>
+          </CreatableSelect>
         </Grid>
         <Grid item xs={12} sm={6}>
           <InputLabel id="right_lang_id_label">Right Language ID *</InputLabel>
-          <Select
+          <CreatableSelect
             required
             id="right_lang_id"
             name="right_lang_id"
             label="Right Language ID"
             fullWidth
             variant="standard"
-            value={props.rightLangID}
-            onChange={state=>props.setRightLangID(state.target.value)}
+            onChange={state=>props.setRightLangID(state.value)}
+            options={lang_id.map(l_id=> {return {label: l_id, value: l_id}})}
           > 
-            {lang_id.map(id => <MenuItem value={id} key={"right"+id}>{id}</MenuItem>)}
-          </Select>
+          </CreatableSelect>
         </Grid>
 
         <Grid item xs={12}>

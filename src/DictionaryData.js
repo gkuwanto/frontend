@@ -29,9 +29,10 @@ export default function DictionartyData(props) {
         </Grid>
         <Grid item xs={12}>
           <TextField
+            required={props.need_mono}
             id="monolingual_left"
             name="monolingual_left"
-            label="Link to monolingual data of left language (optional)"
+            label={!props.need_mono ? "Link to monolingual data of right language ( optional )": "Link to monolingual data of right language"}
             fullWidth
             variant="standard"
             value={props.leftMonolingual}
@@ -40,9 +41,10 @@ export default function DictionartyData(props) {
         </Grid>
         <Grid item xs={12}>
           <TextField
+            required={props.need_mono}
             id="monolingual_right"
             name="monolingual_right"
-            label="Link to monolingual data of right language (optional)"
+            label={!props.need_mono ? "Link to monolingual data of right language ( optional )": "Link to monolingual data of right language"}
             fullWidth
             variant="standard"
             value={props.rightMonolingual}

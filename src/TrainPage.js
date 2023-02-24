@@ -14,6 +14,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import RequiredInfo from './RequiredInfo';
 import ParallelData from './ParallelData';
 import DictionartyData from './DictionaryData';
+import lang_id from "./lang_id";
 
 const steps = ['Required Information', 'Semi Supervised Data', 'Parallel Data',];
 
@@ -47,6 +48,7 @@ export default function Train(props) {
       case 1:
         return <DictionartyData 
           setDictionary={setDictionary} dictionary={dictionary}
+          need_mono={!lang_id.includes(leftLangID) || !lang_id.includes(leftLangID)}
           setLeftMonolingual={setLeftMonolingual} leftMonolingual={leftMonolingual}
           setRightMonolingual={setRightMonolingual} rightMonolingual={rightMonolingual}
         />;
