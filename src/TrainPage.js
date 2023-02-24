@@ -113,13 +113,22 @@ export default function Train(props) {
         if (response.status == 200) {
           return response.json()
         } else {
-          alert(await response.json())
+          console.log(response)
+          throw await response.status
         }
       })
       .then(data => {
         if (data) {
           setExperimetnName(data.experiment_name)
           setActiveStep(activeStep + 1);
+        }
+      })
+      .catch(err => {
+        if (err == 400) {
+          alert("Some Fields are invalid, please recheck over all submitted link given.")
+        }
+        else {
+          alert("Unexpected Error, please try again in a few moment")
         }
       });
     
