@@ -34,6 +34,9 @@ export default function Train(props) {
   const [leftParallel, setLeftParallel] = React.useState('');
   const [rightParallel, setRightParallel] = React.useState('');
   const [experimetnName, setExperimetnName] = React.useState('');
+  const [needMono, setMono] = React.useState(false)
+  const [accept, setAccept] = React.useState(false)
+  const [citation, setCitation] = React.useState('');
 
   const  getStepContent = (step) => {
     switch (step) {
@@ -44,11 +47,12 @@ export default function Train(props) {
           setRightLangID={setRightLangID} rightLangID={rightLangID}
           setTestSet={setTestSet} testSet={testSet}
           setValSet={setValSet} valSet={valSet}
+          setMono={setMono}
         />;
       case 1:
         return <DictionartyData 
           setDictionary={setDictionary} dictionary={dictionary}
-          need_mono={!lang_id.includes(leftLangID) || !lang_id.includes(leftLangID)}
+          need_mono={needMono}
           setLeftMonolingual={setLeftMonolingual} leftMonolingual={leftMonolingual}
           setRightMonolingual={setRightMonolingual} rightMonolingual={rightMonolingual}
         />;
@@ -56,6 +60,8 @@ export default function Train(props) {
         return <ParallelData 
           setParallelLeft={setLeftParallel} parallelLeft={leftParallel}
           setParallelRight={setRightParallel} parallelRight={rightParallel}
+          setCitation={setCitation} citation={citation}
+          setAccept={setAccept} 
         />;
       default:
         throw new Error('Unknown step');
@@ -79,6 +85,15 @@ export default function Train(props) {
           setActiveStep(activeStep + 1);
         }
       case 1:
+        if (needMono) {
+          if (anyNull([
+            dictionary,
+            leftMonolingual,
+            rightMonolingual
+          ])) {
+            return
+          }
+        }
         if (anyNull([
           dictionary,
         ])) {
@@ -91,6 +106,9 @@ export default function Train(props) {
     }
   };
   const submitResult = ()=> {
+    if (!accept) {
+      return
+    }
     const requestOptions = {
       method: 'POST',
       mode: 'cors',
@@ -105,6 +123,7 @@ export default function Train(props) {
           word_dictionary_uploadpath: dictionary,
           validation_uploadpath: valSet,
           test_uploadpath: testSet,
+          citation: citation,
         })
     };
     

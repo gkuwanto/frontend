@@ -42,7 +42,7 @@ export default function RequiredInfo(props) {
             label="Left Language ID"
             fullWidth
             variant="standard"
-            onChange={state=>props.setLeftLangID(state.value)}
+            onChange={state=>{props.setLeftLangID(state.value); if (!lang_id.includes(state.value)) {props.setMono(true)}}}
             options={lang_id.map(l_id=> {return {label: l_id, value: l_id}})}
           > 
           </CreatableSelect>
@@ -56,7 +56,7 @@ export default function RequiredInfo(props) {
             label="Right Language ID"
             fullWidth
             variant="standard"
-            onChange={state=>props.setRightLangID(state.value)}
+            onChange={state=>{props.setRightLangID(state.value); if (!lang_id.includes(state.value)) {props.setMono(true)}}}
             options={lang_id.map(l_id=> {return {label: l_id, value: l_id}})}
           > 
           </CreatableSelect>
