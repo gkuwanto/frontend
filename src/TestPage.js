@@ -89,12 +89,6 @@ export default function Test(props) {
         throw await response.status
       }
     })
-    .then(data => {
-      if (data) {
-        setExperimetnName(data.experiment_name)
-        setActiveStep(activeStep + 1);
-      }
-    })
     .catch(err => {
       if (err == 400) {
         alert("Some Fields are invalid, please recheck over all submitted link given.")
