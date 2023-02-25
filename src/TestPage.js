@@ -47,7 +47,8 @@ export default function Test(props) {
         if (anyNull([
           email,
           experimentName,
-          testSet
+          testSet,
+          direction
         ])) {
           return
         } else {
@@ -67,9 +68,41 @@ export default function Test(props) {
     } else {
       setActiveStep(activeStep + 1);
     }
-    console.log({
-      email,
+    const requestOptions = {
+      method: 'POST',
+      mode: 'cors',
+      headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          email: email,
+          experiment_name: experimentName,
+          test_set: testSet,
+          direction: direction
+        })
+    };
+
+    fetch('https://able-groove-373701.ue.r.appspot.com/predict/', requestOptions)
+    .then(async response => {
+      if (response.status == 200) {
+        return response.json()
+      } else {
+        console.log(response)
+        throw await response.status
+      }
     })
+    .then(data => {
+      if (data) {
+        setExperimetnName(data.experiment_name)
+        setActiveStep(activeStep + 1);
+      }
+    })
+    .catch(err => {
+      if (err == 400) {
+        alert("Some Fields are invalid, please recheck over all submitted link given.")
+      }
+      else {
+        alert("Unexpected Error, please try again in a few moment")
+      }
+    });
   }
 
   const handleBack = () => {
