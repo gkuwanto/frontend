@@ -72,8 +72,8 @@ export default function RequiredInfo(props) {
             label="Left Language ID"
             fullWidth
             variant="standard"
-            value={props.leftLangID}
-            onChange={state=>props.setLeftLangID(state.target.value)}
+            value={props.directions}
+            onChange={state=>props.setDirection(state.target.value)}
           > 
             <MenuItem value={"left"} key={"left"}>Left to Right</MenuItem>
             <MenuItem value={"right"} key={"right"}>Right to Left</MenuItem>

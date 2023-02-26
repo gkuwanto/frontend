@@ -66,43 +66,42 @@ export default function Test(props) {
     ])) {
       return
     } else {
-      setActiveStep(activeStep + 1);
-    }
-    const requestOptions = {
-      method: 'POST',
-      mode: 'cors',
-      headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          email: email,
-          experiment_name: experimentName,
-          test_set: testSet,
-          direction: direction
-        })
-    };
+      const requestOptions = {
+        method: 'POST',
+        mode: 'cors',
+        headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            email: email,
+            experiment_name: experimentName,
+            test_set: testSet,
+            direction: direction
+          })
+      };
 
-    fetch('https://able-groove-373701.ue.r.appspot.com/predict/', requestOptions)
-    .then(async response => {
-      if (response.status == 200) {
-        return response.json()
-      } else {
-        console.log(response)
-        throw await response.status
-      }
-    })
-    .catch(err => {
-      if (err == 400) {
-        alert("Some Fields are invalid, please recheck over all submitted link given.")
-      }
-      else {
-        alert("Unexpected Error, please try again in a few moment")
-      }
-    });
+      fetch('https://able-groove-373701.ue.r.appspot.com/predict/', requestOptions)
+      .then(async response => {
+        if (response.status == 200) {
+          setActiveStep(activeStep + 1);
+          return response.json()
+        } else {
+          console.log(response)
+          throw await response.status
+        }
+      })
+      .catch(err => {
+        if (err == 400) {
+          alert("Some Fields are invalid, please recheck over all submitted link given.")
+        }
+        else {
+          alert("Unexpected Error, please try again in a few moment")
+        }
+      });
+    }
   }
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-  const models = fetch("https://")
 
   return (
     <ThemeProvider theme={theme}>
